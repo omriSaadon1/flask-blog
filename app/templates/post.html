@@ -1,0 +1,21 @@
+
+<div class="list-group">
+    <div class="list-group-item" style="background-color:8AA7CD">
+        <img src="{{ post.author.avatar(50) }}">
+        <p><a class="list-group-item-text" style="font-size:22px" href="{{ url_for('user', nickname=post.author.nickname)}}">{{ post.author.nickname }}</a> said {{ momentjs(post.timestamp).fromNow() }}:</p>
+        <p><span id="post{{ post.id }}">{{ post.body }}</span></p>
+
+        {% if post.language != None and post.language != ''  %}
+        <div><span id="translation{{post.id}}"><a href="javascript:translate('{{ post.language }}', 'he', '#post{{ post.id }}', '#translation{{ post.id }}', '#loading{{ post.id }}');">{{ _('Translate') }}</a></span></div>
+
+        <img id="loading{{post.id}}" style="display: none" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5JgOTa4CZ4I8zTCctgVYp0NGzJ9yTpM0u8T362LQO-3772LYg">
+        {% endif %}
+
+        {% if post.author.id == g.user.id %}
+        <div><a href="{{ url_for('delete', id=post.id) }}">{{ _('Delete') }}</a></div>
+        {% endif %}
+    </div>
+</div>
+
+
+

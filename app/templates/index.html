@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="container">
+     <div class="jumbotron">
+        {% include 'flash.html' %}
+        <h1>Hi, {{ g.user.nickname }}!</h1>
+         <form action="" method="post" name="post">
+                {{ form.hidden_tag() }}
+             <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                      <td>Say something:</td>
+                      <td>{{ form.post(size=30, maxlength=140) }}
+
+                      <input style="margin-left:10px; padding:4px" class="btn btn-primary" type="submit" value="Post!"></td>
+                      <td>
+                      {% for error in form.post.errors %}
+                      <span style="color: red;">[{{ error }}]</span><br>
+                      {% endfor %}
+                      </td>
+                  </tr>
+                </table>
+             </div>
+            </form>
+            {% for post in posts.items %}
+                <div>
+                    {% include 'post.html' %}
+                </div>
+            {% endfor %}
+
+         <ul class="pager">
+            {% if posts.has_prev %}
+                <li class="previous"><a href="{{ url_for('index', page = posts.prev_num) }}">Newer posts</a></li>
+            {% else %}
+                <li class="previous disabled"><a href="#">Newer posts</a></li>
+            {% endif %}
+            {% if posts.has_next %}
+                <li class="next"><a href="{{ url_for('index', page = posts.next_num) }}">Older posts</a></li>
+            {% else %}
+                <li class="next disabled"><a href="#">Older posts</a></li>
+            {% endif %}
+        </ul>
+
+    </div>
+</div>
+
+                <!-- 16:9 aspect ratio -->
+
+{% endblock %}
